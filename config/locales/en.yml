@@ -32,3 +32,7 @@ en:
   recipe_types:
     base: Base
     topping: Topping
+  sizes:  
+    small: "Triangular [250gr]"
+    medium: "Tinita [120gr]"
+    family_size: "Bandeja [500gr]"

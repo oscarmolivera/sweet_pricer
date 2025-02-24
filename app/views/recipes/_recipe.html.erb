@@ -7,4 +7,8 @@
     <strong class="block font-medium mb-1">Recipe type:</strong>
     <%= recipe.recipe_type.capitalize %>
   </div>
+  <div>
+    <strong class="block font-medium mb-1">Versión:</strong>
+    <%= I18n.t("sizes.#{recipe.size}") %>
+  </div>
 </div>
