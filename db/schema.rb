@@ -10,9 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_24_000454) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_24_133254) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "formulas", force: :cascade do |t|
+    t.string "unit", null: false
+    t.decimal "quantity", precision: 10, scale: 2, null: false
+    t.bigint "recipe_id", null: false
+    t.bigint "ingredient_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ingredient_id"], name: "index_formulas_on_ingredient_id"
+    t.index ["recipe_id"], name: "index_formulas_on_recipe_id"
+  end
+
+  create_table "ingredients", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "purchase_unit", null: false
+    t.decimal "purchase_price", precision: 10, scale: 2, null: false
+    t.decimal "purchase_quantity", precision: 10, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "recipes", force: :cascade do |t|
     t.string "name"
@@ -21,4 +41,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_24_000454) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "formulas", "ingredients"
+  add_foreign_key "formulas", "recipes"
 end
