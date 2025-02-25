@@ -33,6 +33,6 @@ en:
     base: Base
     topping: Topping
   sizes:  
-    small: "Triangular [250gr]"
-    medium: "Tinita [120gr]"
+    small: "Tinita [120gr]"
+    medium: "Triangular [250gr]"
     family_size: "Bandeja [500gr]"

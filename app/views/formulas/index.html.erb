@@ -10,22 +10,43 @@
     <%= link_to "New formula", new_formula_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
-  <div id="formulas" class="min-w-full divide-y divide-gray-200 space-y-5">
-    <% if @formulas.any? %>
-      <% @formulas.each do |formula| %>
-        <div class="flex justify-between items-center">
-          <%= render formula %>
-          <div class="space-x-2">
-            <%= link_to "Show", formula, class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= link_to "Edit", edit_formula_path(formula), class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <div class="inline-block">
-              <%= button_to "Destroy", formula, method: :delete, class: "rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+    <div id="formulas" class="bg-white rounded shadow overflow-hidden">
+    <table class="min-w-full">
+      <thead>
+        <tr class="bg-gray-100 text-gray-600 text-sm">
+          <th class="px-4 py-2 text-left font-medium">Unidad</th>
+          <th class="px-4 py-2 text-left font-medium">Cantdad</th>
+          <th class="px-4 py-2 text-left font-medium">Receta</th>
+          <th class="px-4 py-2 text-left font-medium">Ingrediente</th>
+          <th class="px-4 py-2 text-left font-medium">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-800 text-sm">
+        <% if @formulas.any? %>
+        <% @formulas.each do |formula| %>
+        <tr class="border-b hover:bg-gray-50">
+
+          <td class="px-4 py-2"><%= formula.unit%></td>
+          <td class="px-4 py-2"><%= formula.quantity%></td>
+          <td class="px-4 py-2"><%= formula.recipe_id%></td>
+          <td class="px-4 py-2"><%= formula.ingredient_id%></td>
+          <td>
+            <div class="space-x-2">
+              <%= link_to "Show", formula, class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+              <%= link_to "Edit", edit_ingredient_path(formula), class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+                <div class="inline-block">
+                  <%= button_to "Destroy", formula, method: :delete, class: "rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+                </div>
             </div>
-          </div>
+          </td>
+        </tr>
+        <% end %>
+        <% else %>
+        <div class="alert alert-info ">
+          <%= "No objects found" %>
         </div>
-      <% end %>
-    <% else %>
-      <p class="text-center my-10">No formulas found.</p>
-    <% end %>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

@@ -38,6 +38,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_24_133254) do
     t.string "name"
     t.integer "recipe_type"
     t.integer "size", default: 0
+    t.integer "portion", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

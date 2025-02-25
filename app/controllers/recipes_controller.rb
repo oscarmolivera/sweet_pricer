@@ -65,6 +65,6 @@ class RecipesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def recipe_params
-      params.expect(recipe: [ :name, :recipe_type, :size ])
+      params.expect(recipe: [ :name, :recipe_type, :size, :portion ])
     end
 end
