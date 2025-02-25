@@ -1,9 +1,26 @@
-<% content_for :title, "New formula" %>
+<h2 class="text-xl font-bold">Añadir Ingrediente a <%= @recipe.name %></h2>
 
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">New formula</h1>
+<%= form_with model: [@recipe, @formula], local: true do |form| %>
+  <div class="mt-4">
+    <%= form.label :ingredient_id, "Ingrediente" %>
+    <%= form.collection_select :ingredient_id, @ingredients, :id, :name, prompt: "Selecciona un ingrediente", class: "block w-full p-2 border rounded" %>
+  </div>
 
-  <%= render "form", formula: @formula %>
+  <div class="mt-4">
+    <%= form.label :quantity, "Cantidad" %>
+    <%= form.number_field :quantity, step: 0.01, class: "block w-full p-2 border rounded" %>
+  </div>
 
-  <%= link_to "Back to formulas", formulas_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-</div>
+  <div class="mt-4">
+    <%= form.label :unit, "Unidad" %>
+    <%= form.text_field :unit, class: "block w-full p-2 border rounded" %>
+  </div>
+
+  <div class="mt-4">
+    <%= form.submit "Agregar Ingrediente", class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500" %>
+  </div>
+<% end %>
+
+<p class="mt-4">
+  <%= link_to "Volver a la receta", recipe_formulas_path(@recipe), class: "text-blue-600 hover:underline" %>
+</p>

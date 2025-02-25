@@ -1,70 +1,56 @@
 class FormulasController < ApplicationController
-  before_action :set_formula, only: %i[ show edit update destroy ]
+  before_action :set_recipe
+  before_action :set_formula, only: [:edit, :update, :destroy]
 
-  # GET /formulas or /formulas.json
-  def index
-    @formulas = Formula.all
-  end
-
-  # GET /formulas/1 or /formulas/1.json
   def show
+    @formula_ingredients = @recipe.formulas.includes(:ingredient)
   end
 
-  # GET /formulas/new
   def new
-    @formula = Formula.new
+    @formula = @recipe.formulas.new
+    @ingredients = Ingredient.all # List all available ingredients
   end
 
-  # GET /formulas/1/edit
-  def edit
-  end
-
-  # POST /formulas or /formulas.json
   def create
-    @formula = Formula.new(formula_params)
+    @formula = @recipe.formulas.new(formula_params)
 
-    respond_to do |format|
-      if @formula.save
-        format.html { redirect_to @formula, notice: "Formula was successfully created." }
-        format.json { render :show, status: :created, location: @formula }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @formula.errors, status: :unprocessable_entity }
-      end
+    if @formula.save
+      redirect_to recipe_formulas_path(@recipe), notice: "Ingrediente agregado a la receta con éxito."
+    else
+      @ingredients = Ingredient.all
+      render :new, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /formulas/1 or /formulas/1.json
+  def edit
+    @ingredients = Ingredient.all
+  end
+
   def update
-    respond_to do |format|
-      if @formula.update(formula_params)
-        format.html { redirect_to @formula, notice: "Formula was successfully updated." }
-        format.json { render :show, status: :ok, location: @formula }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @formula.errors, status: :unprocessable_entity }
-      end
+    if @formula.update(formula_params)
+      redirect_to recipe_formula_path(@recipe), notice: "Ingrediente actualizado con éxito."
+    else
+      @ingredients = Ingredient.all
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /formulas/1 or /formulas/1.json
   def destroy
-    @formula.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to formulas_path, status: :see_other, notice: "Formula was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    @formula.destroy
+    redirect_to recipe_formula_path(@recipe), notice: "Ingrediente eliminado con éxito."
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_formula
-      @formula = Formula.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def formula_params
-      params.expect(formula: [ :unit, :quantity, :recipe_id, :ingredient_id ])
-    end
+  def set_recipe
+    @recipe = Recipe.find(params[:recipe_id])
+  end
+
+  def set_formula
+    @formula = @recipe.formulas.find(params[:id])
+  end
+
+  def formula_params
+    params.require(:formula).permit(:ingredient_id, :quantity, :unit)
+  end
 end

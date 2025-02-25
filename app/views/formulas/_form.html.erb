@@ -1,4 +1,4 @@
-<%= form_with(model: formula, class: "contents") do |form| %>
+<%= form_with(model: formula, url: recipe_formula_path(formula.recipe, formula), class: "contents") do |form| %>
   <% if formula.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
       <h2><%= pluralize(formula.errors.count, "error") %> prohibited this formula from being saved:</h2>
